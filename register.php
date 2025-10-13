@@ -1,46 +1,23 @@
 <?php
 
-//Listen to events
+use Leantime\Domain\Plugins\Services\Registration;
+use AuditTrail\Controllers\UiController;
+use AuditTrail\Controllers\RpcController;
+use AuditTrail\Middleware\GetLanguageAssets;
 
-function pluginTemplateListener(){
-    //Do stuff
-    //Call service
-}
+return static function () {
+    /** @var Registration $registration */
+    $registration = app()->makeWith(Registration::class, ['pluginId' => 'AuditTrail']);
 
-//Register event listener
-\leantime\core\events::add_event_listener("core.template.tpl.pageparts.header.afterLinkTags", 'pluginTemplateListener');
+    // optional, matches template
+    $registration->addMiddleware(GetLanguageAssets::class);
 
-function pluginTemplateFilter($payload, $params){
+    // UI hooks for the task page
+    $registration->listen('ui.task.tabs', [UiController::class, 'onTaskTabs']);
+    $registration->listen('ui.task.tabpanes', [UiController::class, 'onTaskTabPanes']);
 
-    //payload is the filterable payload (array)
-    //$params contains additional values as needed
+    // optional RPC if you want AJAX fetching later
+    $registration->registerRpc('ticketHistory.getForTask', [RpcController::class, 'getForTask']);
 
-    //Do stuff
-    //Call service
-
-    return $payload;
-}
-
-//Register event listener
-\leantime\core\events::add_filter_listener("filterListenerName", 'pluginTemplateFilter');
-
-
-//Example add menu point
-
-
-function addExampleMenuItem($menuStructure)
-{
-    $menuStructure['default'][10]['submenu'][] = ['type' => 'item', 'module' => 'pluginTemplate', 'title' => 'Plugin Template', 'icon' => 'fa fa-fw fa-cogs', 'tooltip' => 'Plugin Template', 'href' => '/pluginTemplate/settings', 'active' => ['settings']];
-    return $menuStructure;
-
-}
-
-//Register event listener
-\leantime\core\events::add_filter_listener("domain.menu.Repositories.menu.getMenuStructure.menuStructures", 'addExampleMenuItem');
-
-
-//Register Language Assets
-\leantime\core\events::add_filter_listener(
-    'leantime.core.httpkernel.handle.plugins_middleware',
-    fn (array $middleware) => array_merge($middleware, [GetLanguageAssets::class]),
-);
+    return $registration;
+};

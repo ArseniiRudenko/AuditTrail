@@ -1,8 +1,8 @@
 <?php
 
-namespace Leantime\Plugins\PluginTemplate\Models;
+namespace Leantime\Plugins\AuditTrail\Models;
 
-class PluginTemplateModel
+class AuditTrailModel
 {
     public function __construct(
         public string $str1,

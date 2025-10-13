@@ -1,15 +1,15 @@
 {
-    "name": "leantime/pluginTemplate",
-    "description": "A standard plugin structure for Leantime",
+    "name": "solarsuit/audit_trail",
+    "description": "Shows task changes history in the task view.",
     "version": "0.1",
+    "homepage": "https://github.com/ArseniiRudenko/plugin-audit",
     "screenshot": "/images/screenshot.png",
     "authors": [
         {
-            "name": "Leantime",
-            "email": "support@leantime.io"
+            "name": "Arsenii Rudenko",
+            "email": "arsenii@solarsuit.games"
         }
     ],
-    "homepage": "https://leantime.io",
     "type": "plugin",
     "keywords": [
         "",
@@ -18,5 +18,10 @@
     "license": "Apache-2.0",
     "require": {
         "leantime/leantime": "3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Leantime\\Plugins\\AuditTrail\\": "/"
+        }
     }
 }
