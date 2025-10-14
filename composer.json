@@ -12,8 +12,8 @@
     ],
     "type": "plugin",
     "keywords": [
-        "",
-        ""
+        "Audit",
+        "History"
     ],
     "license": "Apache-2.0",
     "require": {
