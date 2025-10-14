@@ -19,17 +19,6 @@ class AuditTrailRepository
         $this->db = app()->make(Db::class);
     }
 
-    // Repo methods here.
-    public function createTable(): void
-    {
-
-    }
-
-    public function dropTable(): void
-    {
-
-    }
-
     /**
      * Retrieve audit trail (ticket history) rows for the given task / ticket id ordered by newest first.
      * Includes user firstname, lastname when available.
@@ -51,7 +40,6 @@ class AuditTrailRepository
         $stmn->execute();
         $rows = $stmn->fetchAll(PDO::FETCH_ASSOC);
         $stmn->closeCursor();
-
         return $rows ?: [];
     }
 

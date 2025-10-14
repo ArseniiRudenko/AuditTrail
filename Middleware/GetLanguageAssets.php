@@ -1,6 +1,6 @@
 <?php
 
-namespace Leantime\Plugins\audittrail\Middleware;
+namespace Leantime\Plugins\AuditTrail\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Cache;
