@@ -26,7 +26,7 @@ class Settings extends Controller
     public function get(): Response
     {
 
-        return $this->tpl->display("pluginTemplate.settings");
+        return $this->tpl->display("AuditTrail.settings");
     }
 
     /**
