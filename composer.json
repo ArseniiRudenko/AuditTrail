@@ -2,7 +2,7 @@
     "name": "solarsuit/audit_trail",
     "description": "Shows task changes history in the task view.",
     "version": "0.1",
-    "homepage": "https://github.com/ArseniiRudenko/plugin-audit",
+    "homepage": "https://github.com/ArseniiRudenko/AuditTrail",
     "screenshot": "/images/screenshot.png",
     "authors": [
         {

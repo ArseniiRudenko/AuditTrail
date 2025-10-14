@@ -1,8 +1,8 @@
 <?php
 
-namespace Leantime\Plugins\PluginTemplate\Controllers;
+namespace Leantime\Plugins\AuditTrail\Controllers;
 
-use leantime\core\controller;
+use Leantime\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class Settings extends Controller
