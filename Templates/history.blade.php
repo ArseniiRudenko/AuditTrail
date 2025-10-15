@@ -15,10 +15,9 @@ $priorityMap = ['1' => 'Critical', '2' => 'High', '3' => 'Medium', '4' => 'Low',
                 <thead>
                 <tr>
                     <th style="width:180px;">When</th>
-                    <th></th>
                     <th style="width:160px;">User</th>
                     <th>Field</th>
-                    <th>Changed to</th>
+                    <th>New value</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,11 +48,6 @@ $priorityMap = ['1' => 'Critical', '2' => 'High', '3' => 'Medium', '4' => 'Low',
                             <?php } ?>
                         </td>
                         <td>
-                            <a href="<?= BASE_URL ?>/users/editUser/<?= (int)$row['userId'] ?>" title="View user" >
-                                <img alt="User" src="<?= BASE_URL ?>/api/users?profileImage=<?= (int)$row['userId'] ?>&v=<?= time() ?>" style="width:24px;height:24px;border-radius:50%;object-fit:contain;"/>
-                            </a>
-                        </td>
-                        <td>
                             <?php if (!empty($row['userId'])) { ?>
                                 <?php
                                 $userFull = trim(($row['userFirstname'] ?? '') . ' ' . ($row['userLastname'] ?? ''));
@@ -61,9 +55,12 @@ $priorityMap = ['1' => 'Critical', '2' => 'High', '3' => 'Medium', '4' => 'Low',
                                     $userFull = $row['userUsername'] ?? ('User #'.(int)$row['userId']);
                                 }
                                 ?>
-                                <a href="<?= BASE_URL ?>/users/editUser/<?= (int)$row['userId'] ?>" title="View user" >
-                                <?= htmlspecialchars($userFull) ?>
+
+                                <a href="<?= BASE_URL ?>/users/editUser/<?= (int)$row['userId'] ?>" title="View user"  class="cr-resizer-horisontal tw-flex tw-items-center tw-gap-2">
+                                <img alt="User" src="<?= BASE_URL ?>/api/users?profileImage=<?= (int)$row['userId'] ?>&v=<?= time() ?>" style="width:24px;height:24px;border-radius:50%;"/>
+                                <div>  <?= htmlspecialchars($userFull) ?></div>
                                 </a>
+
                             <?php } else { ?>
                                 <em>System</em>
                             <?php } ?>

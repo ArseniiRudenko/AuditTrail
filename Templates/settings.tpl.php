@@ -9,7 +9,7 @@
 <div class="maincontent">
     <div class="maincontentinner" style="text-align: center;">
         <h1>Actually, there are no settings for this plugin.</h1><br />
-        <a class="btn" href="/plugins/myapps">Back</a>
+        <a class="btn" href="/plugins/myapps"><span class="fa fa-arrow-left"></span></a>
     </div>
 </div>
 
