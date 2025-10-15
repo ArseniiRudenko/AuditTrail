@@ -30,7 +30,9 @@ $priorityMap = ['1' => 'Critical', '2' => 'High', '3' => 'Medium', '4' => 'Low',
                     if ($changeType === 'priority' && $rawValue !== '' && isset($priorityMap[$rawValue])) {
                         $displayValue = $priorityMap[$rawValue];
                     }
-                    if (($changeType === 'effort' || $changeType === 'storypoints') && $rawValue !== '' && isset($effortLabels[$rawValue])){
+                    if($changeType === 'storypoints')
+                        $changeType= 'effort';
+                    if ($changeType === 'effort' && $rawValue !== '' && isset($effortLabels[$rawValue])){
                         $displayValue = $effortLabels[$rawValue];
                     }
                     if( $changeType === 'editors' ) {
