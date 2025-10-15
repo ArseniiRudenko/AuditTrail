@@ -1,20 +1,15 @@
-# Temple for Leantime plugin
+# Audit Trail plugin for Leantime.
 
-This is a sample plugin for Leantime version 3.x.
+For Leantime version 3.x and above.
 
-You can clone/download this example plugin into `app/Plugins/PluginTemplate` and then refactor the folder name and
-update the namespace to start creating you own plugin. 
+Provides new 'History' tab in To-Do item, that shows change history for the current item.
+Very useful for long living To-Do items, or To-Do items that require collaboration and change hands(assigned person) frequently.
+With history you can just reassign same story to the next collaborator and still have the trail of who worked on it and who moved it to which status.
 
-### Prepare Plugin
-1. Copy the plugin template into the Plugins/ folder 
-2. Rename the plugin and all associated namespaces to your plugin name
-3. Update the composer.json
-4. Go to your Leantime instance->Plugins->Installed Plugins
+### Plugin Installation
+1. Copy the plugin into the Plugins/ folder 
 5. The new plugin should show up already nad be available to install and enable
 
 
 ### Language Assets
-Language assets are added via middleware. Make sure `GetLanguageAssets.php` is included and the cache locations have 
-been renamed. The middleware has to be registered in the register.php. 
-
-
+Plugin does not support proper tanslations yet and is only avaialble in English.
