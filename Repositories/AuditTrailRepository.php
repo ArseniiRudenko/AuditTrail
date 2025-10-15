@@ -11,12 +11,11 @@ class AuditTrailRepository
     private Db $db;
 
     /**
-     * @throws BindingResolutionException
      */
     public function __construct()
     {
         // Get DB Instance
-        $this->db = app()->make(Db::class);
+        $this->db = app(Db::class);
     }
 
     /**
@@ -29,9 +28,11 @@ class AuditTrailRepository
     public function getAuditTrail(int $taskId): array
     {
         $sql = 'SELECT h.id, h.userId, h.ticketId, h.changeType, h.changeValue, h.dateModified,
-                       u.firstname AS userFirstname, u.lastname AS userLastname, u.username AS userUsername
+                       u.firstname AS userFirstname, u.lastname AS userLastname, u.username AS userUsername,
+                       uv.firstname AS valueFirstname, uv.lastname AS valueLastname, uv.username AS valueUsername
                 FROM zp_tickethistory h
                 LEFT JOIN zp_user u ON u.id = h.userId
+                left join zp_user uv ON uv.id = h.changeValue
                 WHERE h.ticketId = :ticketId
                 ORDER BY h.dateModified DESC';
 

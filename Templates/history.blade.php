@@ -33,6 +33,9 @@ $priorityMap = ['1' => 'Critical', '2' => 'High', '3' => 'Medium', '4' => 'Low',
                     if (($changeType === 'effort' || $changeType === 'storypoints') && $rawValue !== '' && isset($effortLabels[$rawValue])){
                         $displayValue = $effortLabels[$rawValue];
                     }
+                    if( $changeType === 'editors' ) {
+                        $changeType = 'assignee';
+                    }
                     ?>
                     <tr>
                         <td data-order="<?= htmlspecialchars($row['dateModified']) ?>">
@@ -56,7 +59,9 @@ $priorityMap = ['1' => 'Critical', '2' => 'High', '3' => 'Medium', '4' => 'Low',
                                     $userFull = $row['userUsername'] ?? ('User #'.(int)$row['userId']);
                                 }
                                 ?>
+                                <a href="<?= BASE_URL ?>/users/editUser/<?= (int)$row['userId'] ?>" title="View user" >
                                 <?= htmlspecialchars($userFull) ?>
+                                </a>
                             <?php } else { ?>
                                 <em>System</em>
                             <?php } ?>
@@ -64,7 +69,20 @@ $priorityMap = ['1' => 'Critical', '2' => 'High', '3' => 'Medium', '4' => 'Low',
                         <td><?= htmlspecialchars(ucfirst($changeType)) ?></td>
                         <td>
                             <?php if ($displayValue !== '') { ?>
-                                <span><?= htmlspecialchars($displayValue) ?></span>
+
+                                <?php if ($changeType === 'assignee' && is_numeric($rawValue) && (int)$rawValue > 0) {
+                                    $assigneeId = (int)$rawValue;
+                                    $userFull = trim(($row['valueFirstname'] ?? '') . ' ' . ($row['valueLastname'] ?? ''));
+                                    if ($userFull === '') {
+                                        $userFull = $row['valueUsername'] ?? ('User #'.(int)$row['userId']);
+                                    }
+                                    ?>
+                                    <a href="<?= BASE_URL ?>/users/editUser/<?= $assigneeId ?>" title="View user">
+                                        <span><?= htmlspecialchars($userFull) ?></span>
+                                    </a>
+                                <?php } else { ?>
+                                    <span><?= htmlspecialchars($displayValue) ?></span>
+                                <?php } ?>
                             <?php } else { ?>
                                 <em>—</em>
                             <?php } ?>

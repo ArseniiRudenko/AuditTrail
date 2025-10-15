@@ -3,17 +3,19 @@
 namespace Leantime\Plugins\AuditTrail\Controllers;
 
 use Illuminate\Support\Facades\Log;
+use Leantime\Core\Controller\Controller;
 use Leantime\Domain\Tickets\Services\Tickets as TicketService;
 use Leantime\Plugins\AuditTrail\Repositories\AuditTrailRepository;
 
-class UiController{
+class UiController extends Controller{
 
     private AuditTrailRepository $auditTrailRepository;
     private TicketService $ticketService;
 
-    public function __construct() {
+    public function init(TicketService $ticketService): void
+    {
         $this->auditTrailRepository = new AuditTrailRepository();
-        $this->ticketService = app(TicketService::class);
+        $this->ticketService = $ticketService;
     }
 
 
