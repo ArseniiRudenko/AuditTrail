@@ -7,9 +7,10 @@ use Leantime\Core\Controller\Controller;
 use Leantime\Domain\Tickets\Services\Tickets as TicketService;
 use Leantime\Plugins\AuditTrail\Repositories\AuditTrailRepository;
 
-class UiController extends Controller{
-
+class UiController extends Controller
+{
     private AuditTrailRepository $auditTrailRepository;
+
     private TicketService $ticketService;
 
     public function init(TicketService $ticketService): void
@@ -18,12 +19,13 @@ class UiController extends Controller{
         $this->ticketService = $ticketService;
     }
 
-
-    public function onTaskTabs($payload): void {
-       echo "<li><a href='#tickethistory'><span class='fa fa-history'></span> History</a></li>";
+    public function onTaskTabs($payload): void
+    {
+        echo "<li><a href='#tickethistory'><span class='fa fa-history'></span> History</a></li>";
     }
 
-    public function onTaskTabPanes($payload) {
+    public function onTaskTabPanes($payload)
+    {
         // Support both legacy ['taskId'=>X] and new ['ticket'=>object/array]
         $taskId = null;
         if (isset($payload['taskId'])) {
@@ -40,9 +42,9 @@ class UiController extends Controller{
         $history = [];
         if ($taskId !== null) {
             try {
-                $history = $this->auditTrailRepository->getAuditTrail((int)$taskId);
+                $history = $this->auditTrailRepository->getAuditTrail((int) $taskId);
             } catch (\Throwable $e) {
-                Log::error('Failed to load audit trail history: '.$e->getMessage(), ['taskId' => $taskId]);
+                Log::error('Failed to load audit trail history: ' . $e->getMessage(), ['taskId' => $taskId]);
             }
         } else {
             Log::warning('Audit Trail Plugin: taskId missing in payload for history tab');
@@ -51,13 +53,11 @@ class UiController extends Controller{
         $payload['history'] = $history;
         $payload['taskId'] = $taskId; // ensure available to view
         $payload['effortLabels'] = $this->ticketService->getEffortLabels();
-        Log::info('Audit Trail Plugin Tab Pane Loaded for Ticket ID: '.json_encode([
+        Log::info('Audit Trail Plugin Tab Pane Loaded for Ticket ID: ' . json_encode([
             'taskId' => $taskId,
             'historyCount' => count($history),
         ]));
 
-        echo view("AuditTrail::history", $payload)->render();
-
+        echo view('AuditTrail::history', $payload)->render();
     }
-
 }

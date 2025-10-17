@@ -3,14 +3,10 @@
 namespace Leantime\Plugins\AuditTrail\Services;
 
 use Illuminate\Support\Facades\Log;
-use Leantime\Plugins\AuditTrail\Repositories\AuditTrailRepository;
 
 class AuditTrail
 {
-
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function install(): void
     {

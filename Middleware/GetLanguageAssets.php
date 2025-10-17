@@ -6,15 +6,16 @@ use Closure;
 use Illuminate\Support\Facades\Cache;
 use Leantime\Core\Environment;
 use Leantime\Core\IncomingRequest;
-use Symfony\Component\HttpFoundation\Response;
 use Leantime\Core\Language;
+use Symfony\Component\HttpFoundation\Response;
 
 class GetLanguageAssets
 {
     public function __construct(
         private Language $language,
         private Environment $config,
-    ) {}
+    ) {
+    }
 
     /**
      * Install the custom fields plugin DB if necessary.
@@ -31,12 +32,12 @@ class GetLanguageAssets
             return $next($request);
         }
 
-        if (! Cache::store('installation')->has('audittrail.language.en-US')) {
+        if (!Cache::store('installation')->has('audittrail.language.en-US')) {
             $languageArray += parse_ini_file(__DIR__ . '/../Language/en-US.ini', true);
         }
 
-        if (($language = $_SESSION["usersettings.language"] ?? $this->config->language) !== 'en-US') {
-            if (! Cache::store('installation')->has('audittrail.language.' . $language)) {
+        if (($language = $_SESSION['usersettings.language'] ?? $this->config->language) !== 'en-US') {
+            if (!Cache::store('installation')->has('audittrail.language.' . $language)) {
                 Cache::store('installation')->put(
                     'audittrail.language.' . $language,
                     parse_ini_file(__DIR__ . '/../Language/' . $language . '.ini', true)

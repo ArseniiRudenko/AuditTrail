@@ -2,7 +2,6 @@
 
 namespace Leantime\Plugins\AuditTrail\Repositories;
 
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Leantime\Core\Db\Db;
 use PDO;
 
@@ -10,8 +9,6 @@ class AuditTrailRepository
 {
     private Db $db;
 
-    /**
-     */
     public function __construct()
     {
         // Get DB Instance
@@ -32,7 +29,7 @@ class AuditTrailRepository
                        uv.firstname AS valueFirstname, uv.lastname AS valueLastname, uv.username AS valueUsername
                 FROM zp_tickethistory h
                 LEFT JOIN zp_user u ON u.id = h.userId
-                left join zp_user uv ON uv.id = h.changeValue
+                LEFT JOIN zp_user uv ON uv.id = h.changeValue
                 WHERE h.ticketId = :ticketId
                 ORDER BY h.dateModified DESC';
 
@@ -43,5 +40,4 @@ class AuditTrailRepository
         $stmn->closeCursor();
         return $rows ?: [];
     }
-
 }
