@@ -4,6 +4,7 @@ namespace Leantime\Plugins\AuditTrail\Controllers;
 
 use Illuminate\Support\Facades\Log;
 use Leantime\Core\Controller\Controller;
+use Leantime\Domain\Projects\Services\Projects as ProjectService;
 use Leantime\Domain\Tickets\Services\Tickets as TicketService;
 use Leantime\Plugins\AuditTrail\Repositories\AuditTrailRepository;
 
@@ -13,10 +14,13 @@ class UiController extends Controller
 
     private TicketService $ticketService;
 
-    public function init(TicketService $ticketService): void
+    private ProjectService $projectService;
+
+    public function init(TicketService $ticketService, ProjectService $projectService): void
     {
         $this->auditTrailRepository = new AuditTrailRepository();
         $this->ticketService = $ticketService;
+        $this->projectService = $projectService;
     }
 
     public function onTaskTabs($payload): void
@@ -26,18 +30,8 @@ class UiController extends Controller
 
     public function onTaskTabPanes($payload)
     {
-        // Support both legacy ['taskId'=>X] and new ['ticket'=>object/array]
-        $taskId = null;
-        if (isset($payload['taskId'])) {
-            $taskId = $payload['taskId'];
-        } elseif (isset($payload['ticket'])) {
-            // Ticket can be object or array
-            if (is_object($payload['ticket']) && isset($payload['ticket']->id)) {
-                $taskId = $payload['ticket']->id;
-            } elseif (is_array($payload['ticket']) && isset($payload['ticket']['id'])) {
-                $taskId = $payload['ticket']['id'];
-            }
-        }
+        $taskId = $payload['ticket']->id;
+        $projectId = $payload['ticket']->projectId;
 
         $history = [];
         if ($taskId !== null) {
@@ -53,6 +47,10 @@ class UiController extends Controller
         $payload['history'] = $history;
         $payload['taskId'] = $taskId; // ensure available to view
         $payload['effortLabels'] = $this->ticketService->getEffortLabels();
+        $payload['statusLabels'] = $this->ticketService->getStatusLabels($projectId);
+        $payload['projectNames'] = $this->projectService->getProjectNames();
+        Log::info(json_encode($payload));
+
         Log::info('Audit Trail Plugin Tab Pane Loaded for Ticket ID: ' . json_encode([
             'taskId' => $taskId,
             'historyCount' => count($history),

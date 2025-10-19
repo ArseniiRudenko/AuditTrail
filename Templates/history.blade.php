@@ -37,6 +37,13 @@ $priorityMap = ['1' => 'Critical', '2' => 'High', '3' => 'Medium', '4' => 'Low',
                     if( $changeType === 'editors' ) {
                         $changeType = 'assignee';
                     }
+                    if($changeType === 'status' && $rawValue !== '' && isset($statusLabels[$rawValue])) {
+                        $displayValue = $statusLabels[$rawValue]['name'];
+                    }
+
+                    if($changeType === 'project' && $rawValue !== '' && isset($projectNames[$rawValue])) {
+                        $displayValue  = $projectNames[$rawValue];
+                    }
                     ?>
                     <tr>
                         <td data-order="<?= htmlspecialchars($row['dateModified']) ?>">
