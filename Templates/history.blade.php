@@ -75,7 +75,6 @@ $priorityMap = ['1' => 'Critical', '2' => 'High', '3' => 'Medium', '4' => 'Low',
                         <td><?= htmlspecialchars(ucfirst($changeType)) ?></td>
                         <td>
                             <?php if ($displayValue !== '') { ?>
-
                                 <?php if ($changeType === 'assignee' && is_numeric($rawValue) && (int)$rawValue > 0) {
                                     $assigneeId = (int)$rawValue;
                                     $userFull = trim(($row['valueFirstname'] ?? '') . ' ' . ($row['valueLastname'] ?? ''));
@@ -85,6 +84,12 @@ $priorityMap = ['1' => 'Critical', '2' => 'High', '3' => 'Medium', '4' => 'Low',
                                     ?>
                                     <a href="<?= BASE_URL ?>/users/editUser/<?= $assigneeId ?>" title="View user">
                                         <span><?= htmlspecialchars($userFull) ?></span>
+                                    </a>
+                                    <?php }elseif ($changeType === 'commit') {
+                                         $parts = explode("||",$rawValue);
+                                    ?>
+                                    <a href="<?=$parts[0]?>" title="View commit">
+                                        <span><?= htmlspecialchars($parts[1]) ?></span>
                                     </a>
                                 <?php } else { ?>
                                     <span><?= htmlspecialchars($displayValue) ?></span>
