@@ -12,7 +12,7 @@ With history you can just reassign same To-Do item to the next collaborator and 
 
 ### Plugin Installation
 1. Copy the plugin into the Plugins/ folder 
-5. The new plugin should show up already nad be available to install and enable
+2. The new plugin should show up already nad be available to install and enable
 
 
 ### Language Assets

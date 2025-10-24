@@ -33,7 +33,7 @@ class AuditTrailRepository
                 WHERE h.ticketId = :ticketId
                 ORDER BY h.dateModified DESC';
 
-        $stmn = $this->db->database->prepare($sql);
+        $stmn = $this->db->pdo()->prepare($sql);
         $stmn->bindValue(':ticketId', $taskId, PDO::PARAM_INT);
         $stmn->execute();
         $rows = $stmn->fetchAll(PDO::FETCH_ASSOC);
