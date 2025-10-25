@@ -25,7 +25,7 @@ class UiController extends Controller
 
     public function onTaskTabs($payload): void
     {
-        echo "<li><a href='#tickethistory'><span class='fa fa-history'></span> History</a></li>";
+        echo "<li><a href='#tickethistory'><span class='fa fa-history'></span> ".$this->tpl->__('tabs.tickethistory')."</a></li>";
     }
 
     public function onTaskTabPanes($payload)
